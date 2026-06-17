@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: Andrea Development Adjusments
+Plugin Name: Andrea WP Core Development
 Plugin URI:
-Description: Adjusts a few things to provide a better development experience.
+Description: Adjusts a few things to provide a better WordPress Core development experience.
 Version: 1.0
 Author: Andrea Fercia
 Author URI: https://profiles.wordpress.org/afercia

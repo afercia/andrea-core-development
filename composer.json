@@ -1,6 +1,6 @@
 {
-	"name": "andrea/andrea-development",
-	"description": "The Andrea development plugin.",
+	"name": "andrea/andrea-core-development",
+	"description": "The Andrea WP core development plugin.",
 	"license": "MIT",
 	"type": "project",
 	"homepage": "https://github.com/afercia",
