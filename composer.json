@@ -1,0 +1,13 @@
+{
+	"name": "andrea/andrea-development",
+	"description": "The Andrea development plugin.",
+	"license": "MIT",
+	"type": "project",
+	"homepage": "https://github.com/afercia",
+	"require": {
+		"php": "^8.0",
+		"symfony/var-dumper": "^4.4"
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true
+}
