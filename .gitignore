@@ -6,3 +6,7 @@
 # Operating system specific files
 .DS_Store
 Thumbs.db
+
+# Files and folders related to build/test tools
+/phpcs.xml.dist
+.cache/*

@@ -12,10 +12,10 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 // Removes the "update now" notice from the admin dashboard.
 function andrea_remove_actions() {
-	remove_action('admin_notices', 'update_nag', 3);
+	remove_action( 'admin_notices', 'update_nag', 3 );
 }
 
-add_action('admin_init', 'andrea_remove_actions', PHP_INT_MAX);
+add_action( 'admin_init', 'andrea_remove_actions', PHP_INT_MAX );
 
 
 /*
@@ -35,10 +35,10 @@ if ( ! function_exists( 'dump' ) ) {
 	/**
 	 * @author Nicolas Grekas <p@tchwork.com>
 	 */
-	function dump( $var, ...$moreVars ) {
-		VarDumper::dump( $var );
+	function dump( $some_var, ...$more_vars ) {
+		VarDumper::dump( $some_var );
 
-		foreach ( $moreVars as $v ) {
+		foreach ( $more_vars as $v ) {
 			VarDumper::dump( $v );
 		}
 
@@ -46,14 +46,14 @@ if ( ! function_exists( 'dump' ) ) {
 			return func_get_args();
 		}
 
-		return $var;
+		return $some_var;
 	}
 }
 
 if ( ! function_exists( 'dd' ) ) {
 	function dd( ...$vars ) {
 		foreach ( $vars as $v ) {
-			VarDumper::dump($v );
+			VarDumper::dump( $v );
 		}
 
 		exit( 1 );
