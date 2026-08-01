@@ -3,7 +3,7 @@
 Plugin Name: Andrea WP Core Development
 Plugin URI:
 Description: Adjusts a few things to provide a better WordPress Core development experience.
-Version: 1.0
+Version: 1.0.1
 Author: Andrea Fercia
 Author URI: https://profiles.wordpress.org/afercia
 */
@@ -59,3 +59,19 @@ if ( ! function_exists( 'dd' ) ) {
 		exit( 1 );
 	}
 }
+
+/**
+ * The core plugin class.
+ */
+require plugin_dir_path( __FILE__ ) . 'includes/class-afcd.php';
+
+/**
+ * Begins execution of the plugin.
+ *
+ * @since 1.0.1
+ */
+function afcd_run() {
+	$plugin = new AFCD_Plugin();
+}
+
+afcd_run();

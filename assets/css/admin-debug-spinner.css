@@ -1,0 +1,18 @@
+/* Debug Spinner Styles */
+.afcd-debug-spinners .spinner {
+	visibility: visible !important;
+}
+
+.afcd-test-spinner-container {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-top: 8px;
+	background-color: #fff;
+	padding: 8px;
+}
+
+.afcd-test-spinner-container .afcd-test-spinner {
+	float: none !important;
+	margin: 0 !important;
+}
