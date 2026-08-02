@@ -59,12 +59,11 @@ class AFCD_Admin_Page {
 		echo '<td>';
 		echo '<input type="checkbox" id="afcd_debug_spinner" name="afcd_debug_spinner" value="1" ' . checked( 1, $debug_spinner_enabled, false ) . ' />';
 		echo '<label for="afcd_debug_spinner">' . __( 'Enable Debug Spinners', 'andrea-core-development' ) . '</label>';
-		echo '<p>' . __( 'Attempt to make all the loading spinners in the classic admin pages visible for debugging purposes.', 'andrea-core-development' ) . '</p>';
+		echo '<p>' . __( 'Attempts to make all the loading spinners in the classic admin pages visible for debugging purposes.', 'andrea-core-development' ) . '</p>';
 		echo '<span class="afcd-test-spinner-container">Test spinner: <span class="spinner afcd-test-spinner"></span></span>';
 		echo '</td>';
 		echo '</tr>';
 		echo '</table>';
-
 		submit_button();
 		echo '</form>';
 

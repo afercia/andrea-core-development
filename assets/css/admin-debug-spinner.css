@@ -1,8 +1,18 @@
 /* Debug Spinner Styles */
-.afcd-debug-spinners .spinner {
+/* Use a high specificity selector to show all spinners. */
+/* Take into account elements that may live outside of #wpwrap e.g. modal dialogs. */
+/* One problem with this is that some old spinners may use display none / block. */
+/* Only exception is the install.php page. */
+body.afcd-debug-spinners .spinner,
+body.afcd-debug-spinners.wp-customizer .spinner {
 	visibility: visible !important;
 }
 
+.wp-customizer .menu-item-handle .spinner {
+	display: block !important;
+}
+
+/* Styles for the test spinner on the settings page. */
 .afcd-test-spinner-container {
 	display: flex;
 	align-items: center;
