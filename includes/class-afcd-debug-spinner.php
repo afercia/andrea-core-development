@@ -1,20 +1,19 @@
 <?php
-
 /**
  * The Debug Spinners functionality.
  * @since      1.0.1
- * @package    Andrea_Core_Development
- * @subpackage Andrea_Core_Development/includes
+ * @package    AFCD_Core_Development
+ * @subpackage AFCD_Core_Development/includes
  * @author     Andrea Fercia
  */
 class AFCD_Debug_Spinner {
 
 	public function __construct() {
-		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_styles' ] );
-		add_filter( 'admin_body_class', [ $this, 'add_debug_spinner_class' ] );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
+		add_filter( 'admin_body_class', array( $this, 'add_debug_spinner_class' ) );
 		// The Customizer does not use the admin_body_class filter.
 		// Use an action instead.
-		add_action( 'customize_controls_head', [ $this, 'add_debug_spinner_class_to_customizer' ] );
+		add_action( 'customize_controls_head', array( $this, 'add_debug_spinner_class_to_customizer' ) );
 	}
 
 	/**
@@ -91,7 +90,7 @@ class AFCD_Debug_Spinner {
 		// If we are in the AFCD plugin's admin page and a form submission has
 		// occurred, use the submitted value.
 		if (
-			'toplevel_page_andrea-core-development' === $hook_suffix && ! empty( $_POST )
+			'toplevel_page_afcd-core-development' === $hook_suffix && ! empty( $_POST )
 		) {
 			$debug_spinner_enabled =
 				isset( $_POST['afcd_debug_spinner'] ) && 1 === (int) $_POST['afcd_debug_spinner'];

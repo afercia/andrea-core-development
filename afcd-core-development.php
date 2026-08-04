@@ -1,21 +1,28 @@
 <?php
-/*
-Plugin Name: Andrea WP Core Development
-Plugin URI:
-Description: Adjusts a few things to provide a better WordPress Core development experience.
-Version: 1.0.1
-Author: Andrea Fercia
-Author URI: https://profiles.wordpress.org/afercia
+/**
+ * Andrea WP Core Development
+ *
+ * Plugin Name: Andrea WP Core Development
+ * Plugin URI:  https://github.com/afercia/andrea-core-development
+ * Description: Adjusts a few things to provide a better WordPress Core development experience.
+ * Version:     1.0.1
+ * Author:      Andrea Fercia
+ * Author URI:  https://profiles.wordpress.org/afercia
+ * License:     GPLv2 or later
+ * License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * Text Domain: classic-editor
+ * Requires at least: 7.0
+ * Requires PHP: 8.0.0
 */
 
 require_once __DIR__ . '/vendor/autoload.php';
 
 // Removes the "update now" notice from the admin dashboard.
-function andrea_remove_actions() {
+function afcd_remove_actions() {
 	remove_action( 'admin_notices', 'update_nag', 3 );
 }
 
-add_action( 'admin_init', 'andrea_remove_actions', PHP_INT_MAX );
+add_action( 'admin_init', 'afcd_remove_actions', PHP_INT_MAX );
 
 
 /*
@@ -63,7 +70,7 @@ if ( ! function_exists( 'dd' ) ) {
 /**
  * The core plugin class.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-afcd.php';
+require plugin_dir_path( __FILE__ ) . 'includes/class-afcd-plugin.php';
 
 /**
  * Begins execution of the plugin.

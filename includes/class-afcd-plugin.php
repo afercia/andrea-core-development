@@ -1,11 +1,10 @@
 <?php
-
 /**
  * The core Andrea Core Development plugin class.
  *
  * @since      1.0.1
- * @package    Andrea_Core_Development
- * @subpackage Andrea_Core_Development/includes
+ * @package    AFCD_Core_Development
+ * @subpackage AFCD_Core_Development/includes
  * @author     Andrea Fercia
  */
 class AFCD_Plugin {

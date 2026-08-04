@@ -1,10 +1,9 @@
 <?php
-
 /**
  * The plugin settings page.
  * @since      1.0.1
- * @package    Andrea_Core_Development
- * @subpackage Andrea_Core_Development/includes
+ * @package    AFCD_Core_Development
+ * @subpackage AFCD_Core_Development/includes
  * @author     Andrea Fercia
  */
 class AFCD_Admin_Page {
@@ -13,8 +12,8 @@ class AFCD_Admin_Page {
 	}
 
 	public function create_admin_menu() {
-		$admin_page_slug       = 'andrea-core-development';
-		$admin_page_title      = __( 'Core Development', 'andrea-core-development' );
+		$admin_page_slug       = 'afcd-core-development';
+		$admin_page_title      = __( 'Core Development', 'afcd-core-development' );
 		$admin_page_menu_title = $admin_page_title;
 		add_menu_page(
 			$admin_page_title,
@@ -40,7 +39,7 @@ class AFCD_Admin_Page {
 			// Save the setting.
 			update_user_meta( $user_id, 'afcd_debug_spinner', $debug_spinner );
 
-			echo '<div class="notice notice-success is-dismissible"><p>' . __( 'Settings saved successfully.', 'andrea-core-development' ) . '</p></div>';
+			echo '<div class="notice notice-success is-dismissible"><p>' . __( 'Settings saved successfully.', 'afcd-core-development' ) . '</p></div>';
 
 			// For immediate UI feedback, we use the submitted value
 			$debug_spinner_enabled = $debug_spinner;
@@ -55,11 +54,11 @@ class AFCD_Admin_Page {
 
 		echo '<table class="form-table">';
 		echo '<tr>';
-		echo '<th scope="row">' . __( 'Debug Spinners', 'andrea-core-development' ) . '</th>';
+		echo '<th scope="row">' . __( 'Debug Spinners', 'afcd-core-development' ) . '</th>';
 		echo '<td>';
 		echo '<input type="checkbox" id="afcd_debug_spinner" name="afcd_debug_spinner" value="1" ' . checked( 1, $debug_spinner_enabled, false ) . ' />';
-		echo '<label for="afcd_debug_spinner">' . __( 'Enable Debug Spinners', 'andrea-core-development' ) . '</label>';
-		echo '<p>' . __( 'Attempts to make all the loading spinners in the classic admin pages visible for debugging purposes.', 'andrea-core-development' ) . '</p>';
+		echo '<label for="afcd_debug_spinner">' . __( 'Enable Debug Spinners', 'afcd-core-development' ) . '</label>';
+		echo '<p>' . __( 'Attempts to make all the loading spinners in the classic admin pages visible for debugging purposes.', 'afcd-core-development' ) . '</p>';
 		echo '<span class="afcd-test-spinner-container">Test spinner: <span class="spinner afcd-test-spinner"></span></span>';
 		echo '</td>';
 		echo '</tr>';
