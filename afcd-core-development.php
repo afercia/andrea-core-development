@@ -67,37 +67,7 @@ if ( ! function_exists( 'dd' ) ) {
 	}
 }
 
-// 1. Force WordPress to generate a valid domain pattern for the From address
-add_filter( 'wp_mail_from', function() {
-    return 'wordpress@localhost.local';
-} );
+require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
 
-/**
- * Plugin Name: Mailpit SMTP Router
- * Description: Routes local core development environment emails to the Mailpit container.
- */
-
-add_action( 'phpmailer_init', function( $phpmailer ) {
-    $phpmailer->isSMTP();
-    $phpmailer->Host       = 'mail';
-    $phpmailer->Port       = 1025;
-    $phpmailer->SMTPAuth   = false;
-    $phpmailer->SMTPSecure = false;
-} );
-
-
-/**
- * The core plugin class.
- */
-require plugin_dir_path( __FILE__ ) . 'includes/class-afcd-plugin.php';
-
-/**
- * Begins execution of the plugin.
- *
- * @since 1.0.1
- */
-function afcd_run() {
-	$plugin = new AFCD_Plugin();
-}
-
-afcd_run();
+// Initialize plugin
+new AFCD_Plugin();

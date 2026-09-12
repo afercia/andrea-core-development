@@ -15,29 +15,15 @@ class AFCD_Plugin {
 	 * @since 1.0.1
 	 */
 	public function __construct() {
-		$this->load_dependencies();
-		$this->define_admin_hooks();
+		$this->init_plugin_classes();
 	}
-
 	/**
-	 * Loads the required dependencies for this plugin.
-	 *
-	 * @since 1.0.1
-	 * @access private
-	 */
-	private function load_dependencies() {
-		require_once plugin_dir_path( __DIR__ ) . 'includes/class-afcd-debug-spinner.php';
-		require_once plugin_dir_path( __DIR__ ) . 'includes/class-afcd-admin-page.php';
-		require_once plugin_dir_path( __DIR__ ) . 'includes/class-afcd-mailpit.php';
-	}
-
-	/**
-	 * Registers all of the hooks related to the admin area.
+	 * Initializes the plugin by creating instances of the core classes.
 	 *
 	 * @since  1.0.1
 	 * @access private
 	 */
-	private function define_admin_hooks() {
+	private function init_plugin_classes() {
 		new AFCD_Admin_Page();
 		new AFCD_Debug_Spinner();
 		new AFCD_Mailpit();
