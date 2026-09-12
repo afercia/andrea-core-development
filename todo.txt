@@ -1,0 +1,90 @@
+
+
+Try thi sfilter to solve the Orbstack loopback requests issue.
+
+/**
+ * Fix OrbStack multi-container loopback requests for wordpress-develop
+ */
+add_filter( 'pre_http_request', function( $pre, $parsed_args, $url ) {
+    // Intercept loopbacks checking localhost:8889
+    if ( strpos( $url, 'localhost:8889' ) !== false ) {
+
+        // Reroute out of the PHP container directly back to your Mac's exposed port 8889
+        $new_url = str_replace( 'localhost:8889', 'host.docker.internal:8889', $url );
+
+        // Force the host header so Nginx maps to the right virtualhost configuration
+        $parsed_args['headers']['Host'] = 'localhost:8889';
+
+        // Bypass SSL validation if your local environment utilizes HTTPS later on
+        $parsed_args['sslverify'] = false;
+
+        return wp_remote_request( $new_url, $parsed_args );
+    }
+    return $pre;
+}, 10, 3 );
+
+See search result:
+
+The reason your terminal cURL test passes while WordPress Site Health still fails is that WordPress explicitly requests http://localhost:8889, but your extra_hosts mapping is pointing the word localhost to your gateway IP.
+Inside your container's system routing layout (/etc/hosts), linux runtimes are structurally hardcoded to prioritize assigning the loopback 127.0.0.1 to the exact keyword localhost, overriding your extra_hosts variable entirely.
+When you ran the terminal test manually, you targeted the literal address http://192.168.97.1:8889 directly. However, when WordPress runs Site Health, it programmatically queries your registered database home URL (http://localhost:8889). The underlying cURL execution encounters localhost, hits the container's hardcoded internal routing instead of your override, and crashes. [1, 2, 3]
+Because you do not want to use any PHP code filters, you can fix this entirely at the infrastructure layer using your existing custom wpstart shell workflow through one of two methods:
+------------------------------
+## Method 1: Change the Local Domain Mapping (Cleanest & Most Reliable)
+The most elegant way to solve loopbacks without a PHP filter is to stop using the keyword localhost as your primary local web address. Using a dedicated local dev domain name keeps your container operating system from conflicting over the word localhost. [4]
+
+   1. Update your Mac's host file: Open terminal and edit /etc/hosts:
+
+   sudo nano /etc/hosts
+
+   Add a line mapping your site to your Mac loopback:
+
+   127.0.0.1   wpdev.local
+
+   2. Update your docker-compose.override.yml: Tell the PHP container to route wpdev.local to the gateway:
+
+   services:
+     php:
+       extra_hosts:
+         - "wpdev.local:host-gateway"
+
+   3. Change your WordPress site URL settings:
+   Run a WP-CLI command using your runner script to swap out the site addresses in your database:
+
+   node ./tools/local-env/scripts/docker.js run --rm cli wp search-replace "http://localhost:8889" "http://wpdev.local:8889"
+
+   [5]
+
+Now, you can access your site at http://wpdev.local:8889 in your browser. When WordPress hits its own loopback internally, it looks up wpdev.local, matches your extra_hosts entry, and bridges to your Mac perfectly.
+------------------------------
+## Method 2: Force Nginx onto Port 8889 inside Docker
+If you absolutely must keep using http://localhost:8889 as your address, you have to ensure that when cURL hits the internal container loopback (127.0.0.1:8889), an internal web listener actually answers it.
+You can force the internal Nginx container to bind its internal port to 8889 alongside port 80 by modifying your docker-compose.override.yml:
+
+services:
+  # Route traffic using Docker's internal container communication network
+  php:
+    extra_hosts:
+      - "localhost:127.0.0.1"
+
+  # Force the nginx container to accept internal traffic on port 8889
+  nginx:
+    ports:
+      - "8889:8889"
+    environment:
+      - PORT=8889
+
+Run your custom wpstart script to force recreate the containers:
+
+wpstart
+
+## Why this fixes it:
+When Site Health calls localhost:8889, the container handles it natively inside its own isolated scope instead of breaking out to your Mac. Since Nginx is configured via the override to listen on port 8889 natively inside the container network, it answers the request directly, resolving the cURL error 7 without changing a single line of PHP code. [6]
+Would you prefer to switch to a custom domain path like wpdev.local to avoid localhost namespace clashes, or would you like to attempt mapping Nginx's internal container ports to match?
+
+[1] [https://forums.docker.com](https://forums.docker.com/t/seeking-help-with-docker-wordpress-issues-rest-api-loopback-and-rss-errors/151011)
+[2] [https://core.trac.wordpress.org](https://core.trac.wordpress.org/ticket/65484)
+[3] [https://core.trac.wordpress.org](https://core.trac.wordpress.org/ticket/65484)
+[4] [https://forums.docker.com](https://forums.docker.com/t/wordpress-docker-image-breaks-rest-api-because-loopback-fails/91886)
+[5] [https://github.com](https://github.com/EasyEngine/easyengine/discussions/1513)
+[6] [https://stackoverflow.com](https://stackoverflow.com/questions/43743894/local-wordpress-env-with-docker-compose-curl-error-7-failed-to-connect-to-loc)

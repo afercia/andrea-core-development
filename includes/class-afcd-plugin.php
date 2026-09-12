@@ -28,6 +28,7 @@ class AFCD_Plugin {
 	private function load_dependencies() {
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-afcd-debug-spinner.php';
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-afcd-admin-page.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-afcd-mailpit.php';
 	}
 
 	/**
@@ -39,5 +40,6 @@ class AFCD_Plugin {
 	private function define_admin_hooks() {
 		new AFCD_Admin_Page();
 		new AFCD_Debug_Spinner();
+		new AFCD_Mailpit();
 	}
 }
