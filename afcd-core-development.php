@@ -5,7 +5,7 @@
  * Plugin Name: Andrea WP Core Development
  * Plugin URI:  https://github.com/afercia/andrea-core-development
  * Description: Adjusts a few things to provide a better WordPress Core development experience.
- * Version:     1.0.1
+ * Version:     1.1.0
  * Author:      Andrea Fercia
  * Author URI:  https://profiles.wordpress.org/afercia
  * License:     GPLv2 or later

@@ -1,13 +1,22 @@
 <?php
 /**
  * The plugin settings page.
+ *
  * @since      1.0.1
  * @package    AFCD_Core_Development
  * @subpackage AFCD_Core_Development/includes
  * @author     Andrea Fercia
  */
-class AFCD_Admin_Page {
-	public function __construct() {
+class AFCD_Admin_Page implements AFCD_Integration_Interface {
+
+	/**
+	 * Registers the hooks for this integration.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return void
+	 */
+	public function register_hooks() {
 		add_action( 'admin_menu', array( $this, 'create_admin_menu' ) );
 	}
 
@@ -15,6 +24,7 @@ class AFCD_Admin_Page {
 		$admin_page_slug       = 'afcd-core-development';
 		$admin_page_title      = __( 'Core Development', 'afcd-core-development' );
 		$admin_page_menu_title = $admin_page_title;
+
 		add_menu_page(
 			$admin_page_title,
 			$admin_page_menu_title,
@@ -41,10 +51,10 @@ class AFCD_Admin_Page {
 
 			echo '<div class="notice notice-success is-dismissible"><p>' . __( 'Settings saved successfully.', 'afcd-core-development' ) . '</p></div>';
 
-			// For immediate UI feedback, we use the submitted value
+			// For immediate UI feedback, we use the submitted value.
 			$debug_spinner_enabled = $debug_spinner;
 		} else {
-			// Get current user's setting
+			// Get current user's setting.
 			$current_user_id       = get_current_user_id();
 			$debug_spinner_enabled = get_user_meta( $current_user_id, 'afcd_debug_spinner', true );
 		}

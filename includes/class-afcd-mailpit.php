@@ -1,6 +1,7 @@
 <?php
 /**
  * The adjustments for the Mailpit container functionality.
+ *
  * @since      1.0.1
  * @package    AFCD_Core_Development
  * @subpackage AFCD_Core_Development/includes
@@ -18,16 +19,23 @@
  *  image: axllent/mailpit:latest
  *  restart: unless-stopped
  *  ports:
- *    - '1025:1025'
- *    - '8025:8025'
+ *     - '1025:1025'
+ *     - '8025:8025'
  *  networks:
- *    - wpdevnet
+ *     - wpdevnet
  * ```
  */
-class AFCD_Mailpit {
+class AFCD_Mailpit implements AFCD_Integration_Interface {
 
-	public function __construct() {
-		// 1. Force WordPress to generate a valid domain pattern for the From address
+	/**
+	 * Registers the hooks for this integration.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return void
+	 */
+	public function register_hooks() {
+		// 1. Force WordPress to generate a valid domain pattern for the From address.
 		add_filter(
 			'wp_mail_from',
 			function () {

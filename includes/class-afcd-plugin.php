@@ -10,22 +10,68 @@
 class AFCD_Plugin {
 
 	/**
-	 * Defines the core functionality of the plugin.
+	 * Loads the integrations.
 	 *
 	 * @since 1.0.1
 	 */
 	public function __construct() {
-		$this->init_plugin_classes();
+		$this->load_integrations();
 	}
+
 	/**
-	 * Initializes the plugin by creating instances of the core classes.
+	 * Auto-discovers and initializes all integrations.
 	 *
-	 * @since  1.0.1
+	 * Scans the includes directory for PHP files that define a class
+	 * implementing AFCD_Integration_Interface, includes them, and calls
+	 * register_hooks() on each.
+	 *
+	 * @since 1.1.0
+	 *
 	 * @access private
 	 */
-	private function init_plugin_classes() {
-		new AFCD_Admin_Page();
-		new AFCD_Debug_Spinner();
-		new AFCD_Mailpit();
+	private function load_integrations() {
+		$includes_dir = __DIR__;
+		$files        = glob( $includes_dir . '/class-afcd-*.php' );
+
+		if ( ! $files ) {
+			return;
+		}
+
+		foreach ( $files as $file ) {
+			// Skip the interface file itself.
+			if ( false === strpos( $file, 'interface' ) ) {
+				// phpcs:ignore WordPress.Files.IncludingFiles -- Auto-discovery of integration files.
+				require_once $file;
+			}
+		}
+
+		// Now that all classes are loaded, find and instantiate the integrations.
+		$integrations = $this->discover_integrations();
+
+		foreach ( $integrations as $class_name ) {
+			$integration = new $class_name();
+			$integration->register_hooks();
+		}
+	}
+
+	/**
+	 * Discovers all classes implementing AFCD_Integration_Interface.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @access private
+	 *
+	 * @return string[] Array of class names implementing the interface.
+	 */
+	private function discover_integrations() {
+		$integrations = array();
+
+		foreach ( get_declared_classes() as $class ) {
+			if ( in_array( 'AFCD_Integration_Interface', class_implements( $class ), true ) ) {
+				$integrations[] = $class;
+			}
+		}
+
+		return $integrations;
 	}
 }

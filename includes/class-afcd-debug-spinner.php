@@ -1,16 +1,25 @@
 <?php
 /**
  * The Debug Spinners functionality.
+ *
  * @since      1.0.1
  * @package    AFCD_Core_Development
  * @subpackage AFCD_Core_Development/includes
  * @author     Andrea Fercia
  */
-class AFCD_Debug_Spinner {
+class AFCD_Debug_Spinner implements AFCD_Integration_Interface {
 
-	public function __construct() {
+	/**
+	 * Registers the hooks for this integration.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return void
+	 */
+	public function register_hooks() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
 		add_filter( 'admin_body_class', array( $this, 'add_debug_spinner_class' ) );
+
 		// The Customizer does not use the admin_body_class filter.
 		// Use an action instead.
 		add_action( 'customize_controls_head', array( $this, 'add_debug_spinner_class_to_customizer' ) );
@@ -39,7 +48,7 @@ class AFCD_Debug_Spinner {
 	 * @return string Modified body classes.
 	 */
 	public function add_debug_spinner_class( $classes ) {
-		// Make sure we're in admin area
+		// Make sure we're in admin area.
 		if ( ! is_admin() ) {
 			return $classes;
 		}
@@ -58,14 +67,13 @@ class AFCD_Debug_Spinner {
 	 *
 	 * @since 1.0.1
 	 *
-	 * @return void.
+	 * @return void
 	 */
 	public function add_debug_spinner_class_to_customizer() {
 		$debug_spinner_enabled = $this->is_debug_spinner_enabled();
 
 		if ( $debug_spinner_enabled ) {
 			echo '<script>document.addEventListener( "DOMContentLoaded", function() { document.body.classList.add( "afcd-debug-spinners" ); } );</script>';
-			// $( this ).find( '.step .spinner' ).css( 'visibility', 'visible' );
 		}
 	}
 
