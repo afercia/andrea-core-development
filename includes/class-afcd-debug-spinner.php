@@ -19,10 +19,6 @@ class AFCD_Debug_Spinner implements AFCD_Integration_Interface {
 	public function register_hooks() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
 		add_filter( 'admin_body_class', array( $this, 'add_debug_spinner_class' ) );
-
-		// The Customizer does not use the admin_body_class filter.
-		// Use an action instead.
-		add_action( 'customize_controls_head', array( $this, 'add_debug_spinner_class_to_customizer' ) );
 	}
 
 	/**
@@ -60,21 +56,6 @@ class AFCD_Debug_Spinner implements AFCD_Integration_Interface {
 		}
 
 		return $classes;
-	}
-
-	/**
-	 * Adds debug spinner class to the Customizer.
-	 *
-	 * @since 1.0.1
-	 *
-	 * @return void
-	 */
-	public function add_debug_spinner_class_to_customizer() {
-		$debug_spinner_enabled = $this->is_debug_spinner_enabled();
-
-		if ( $debug_spinner_enabled ) {
-			echo '<script>document.addEventListener( "DOMContentLoaded", function() { document.body.classList.add( "afcd-debug-spinners" ); } );</script>';
-		}
 	}
 
 	/**
