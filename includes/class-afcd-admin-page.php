@@ -22,7 +22,7 @@ class AFCD_Admin_Page implements AFCD_Integration_Interface {
 
 	public function create_admin_menu() {
 		$admin_page_slug       = 'afcd-core-development';
-		$admin_page_title      = __( 'Core Development', 'afcd-core-development' );
+		$admin_page_title      = __( 'Core Dev Tools', 'afcd-core-development' );
 		$admin_page_menu_title = $admin_page_title;
 
 		add_menu_page(
