@@ -89,9 +89,9 @@ class AFCD_Admin_Page implements AFCD_Integration_Interface {
 		echo '<tr>';
 		echo '<th scope="row">' . __( 'Debug Spinners', 'afcd-core-development' ) . '</th>';
 		echo '<td>';
-		echo '<input type="checkbox" id="afcd_debug_spinner" name="afcd_debug_spinner" value="1" ' . checked( 1, $debug_spinner_enabled, false ) . ' />';
-		echo '<label for="afcd_debug_spinner">' . __( 'Enable Debug Spinners', 'afcd-core-development' ) . '</label>';
-		echo '<p>' . __( 'Attempts to make visible all the loading spinners in the classic admin pages for debugging purposes.', 'afcd-core-development' ) . '</p>';
+		echo '<input type="checkbox" id="afcd-debug-spinner" aria-describedby="afcd-debug-spinner-description" name="afcd_debug_spinner" value="1" ' . checked( 1, $debug_spinner_enabled, false ) . ' />';
+		echo '<label for="afcd-debug-spinner">' . __( 'Enable Debug Spinners', 'afcd-core-development' ) . '</label>';
+		echo '<p id="afcd-debug-spinner-description">' . __( 'Makes all loading spinners on the classic administration pages visible for debugging purposes.', 'afcd-core-development' ) . '</p>';
 		echo '<span class="afcd-test-spinner-container">Test spinner: <span class="spinner afcd-test-spinner"></span></span>';
 		echo '</td>';
 		echo '</tr>';
