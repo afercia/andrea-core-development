@@ -22,7 +22,7 @@ class AFCD_Debug_Spinner implements AFCD_Integration_Interface {
 	}
 
 	/**
-	 * Enqueues the admin styles.
+	 * Enqueues the admin styles to make the spinners visible.
 	 *
 	 * @since 1.0.1
 	 */
